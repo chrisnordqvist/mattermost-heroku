@@ -26,6 +26,7 @@ NODE_VERSION="v5.5.0"
 NODE_DOWNLOAD_URL="http://s3pository.heroku.com/node/$NODE_VERSION/node-$NODE_VERSION-$OS-$CPU.tar.gz"
 MATTERMOST_REPO="$(cat $ENV_DIR/MATTERMOST_REPO)"
 MATTERMOST_BRANCH="$(cat $ENV_DIR/MATTERMOST_BRANCH)"
+BUILD_NUMBER="$(cat $ENV_DIR/BUILD_NUMBER)"
 PATH="$RUBY_GEM_DIR/bin:$BUILDPACK/$PLATFORM/bin:$BUILD_DIR/.heroku/node/bin":$PATH
 
 mkdir -p "$BUILD_DIR" "$CACHE_DIR"
@@ -37,11 +38,9 @@ mkdir -p $BUILD_DIR/bin
 step "Checking out $MATTERMOST_REPO#$MATTERMOST_BRANCH"
 cd $BUILD_DIR
 git clone --depth 1 -b $MATTERMOST_BRANCH $MATTERMOST_REPO platform
-cp -R platform/* .
-rm -r platform
 
-IMPORTPATH=$(<$BUILD_DIR/Godeps/Godeps.json jq -r .ImportPath)
-GOVERSION=$(<$BUILD_DIR/Godeps/Godeps.json jq -r .GoVersion)
+IMPORTPATH=$(<$BUILD_DIR/platform/Godeps/Godeps.json jq -r .ImportPath)
+GOVERSION=$(<$BUILD_DIR/platform/Godeps/Godeps.json jq -r .GoVersion)
 GOFILENAME=${GOFILE:-$GOVERSION.$(uname|tr A-Z a-z)-amd64$(platext $GOVERSION).tar.gz}
 GODOWNLOADURL=${GOURL:-$(urlfor $GOVERSION $GOFILENAME)}
 
@@ -65,16 +64,16 @@ cp $(which godep) $GOPATH/bin/
 step "Building Mattermost"
 MATTERMOSTPATH=$GOPATH/src/$IMPORTPATH
 mkdir -p $MATTERMOSTPATH
-cp -R $BUILD_DIR/* $MATTERMOSTPATH
+cp -R $BUILD_DIR/platform $MATTERMOSTPATH
 
 cd $MATTERMOSTPATH
 make build-server
 make build-client
 
-cp $MATTERMOSTPATH/web/static/js/bundle*.js $BUILD_DIR/web/static/js/
-cp $MATTERMOSTPATH/web/static/js/bundle*.js.map $BUILD_DIR/web/static/js/
-cp $MATTERMOSTPATH/web/static/js/libs*.js $BUILD_DIR/web/static/js/
-cp -Rn $MATTERMOSTPATH/web/static/css/* $BUILD_DIR/web/static/css/
+cp $MATTERMOSTPATH/platform/web/static/js/bundle*.js $BUILD_DIR/web/static/js/
+cp $MATTERMOSTPATH/platform/web/static/js/bundle*.js.map $BUILD_DIR/web/static/js/
+cp $MATTERMOSTPATH/platform/web/static/js/libs*.js $BUILD_DIR/web/static/js/
+cp -Rn $MATTERMOSTPATH/platform/web/static/css/* $BUILD_DIR/web/static/css/
 sed -i'.bak' 's|bundle.js|bundle.min.js|g' $BUILD_DIR/web/templates/head.html
 
 mkdir data/
