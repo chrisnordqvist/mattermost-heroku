@@ -70,10 +70,10 @@ cd $MATTERMOSTPATH
 make build-server
 make build-client
 
-cp $MATTERMOSTPATH/web/static/js/bundle*.js $BUILD_DIR/web/static/js/
-cp $MATTERMOSTPATH/web/static/js/bundle*.js.map $BUILD_DIR/web/static/js/
-cp $MATTERMOSTPATH/web/static/js/libs*.js $BUILD_DIR/web/static/js/
-cp -Rn $MATTERMOSTPATH/web/static/css/* $BUILD_DIR/web/static/css/
-sed -i'.bak' 's|bundle.js|bundle.min.js|g' $BUILD_DIR/web/templates/head.html
+# cp $MATTERMOSTPATH/web/static/js/bundle*.js $BUILD_DIR/web/static/js/
+# cp $MATTERMOSTPATH/web/static/js/bundle*.js.map $BUILD_DIR/web/static/js/
+# cp $MATTERMOSTPATH/web/static/js/libs*.js $BUILD_DIR/web/static/js/
+# cp -Rn $MATTERMOSTPATH/web/static/css/* $BUILD_DIR/web/static/css/
+# sed -i'.bak' 's|bundle.js|bundle.min.js|g' $BUILD_DIR/web/templates/head.html
 
 mkdir data/
