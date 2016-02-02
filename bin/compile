@@ -64,10 +64,9 @@ cp $(which godep) $GOPATH/bin/
 step "Building Mattermost"
 MATTERMOSTPATH=$GOPATH/src/$IMPORTPATH
 mkdir -p $MATTERMOSTPATH
-cp -R $BUILD_DIR/platform/* $MATTERMOSTPATH
+cp -R $BUILD_DIR/platform/. $MATTERMOSTPATH
 
 cd $MATTERMOSTPATH
-ls -la .
 make build-server
 make build-client
 
