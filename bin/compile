@@ -67,6 +67,7 @@ mkdir -p $MATTERMOSTPATH
 cp -R $BUILD_DIR/platform $MATTERMOSTPATH
 
 cd $MATTERMOSTPATH
+ls .
 make build-server
 make build-client
 
