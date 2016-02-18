@@ -11,7 +11,7 @@
         "description": "A tarball containing the mattermost source to download + build - NOTE: this CAN NOT be the prebuild and packaged release, only the source"
     },
     "MATTERMOST_BRANCH": {
-        "value": "v1.4.0",
+        "value": "release-2.0",
         "description": "Git branch or tag to checkout for building"
     },
     "TEAM_SETTINGS__SITE_NAME": "Mattermost",
