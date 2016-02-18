@@ -7,7 +7,7 @@
   "env": {
     "BUILDPACK_URL": "http://github.com/cadecairos/mattermost-heroku.git#mattermoz",
     "MATTERMOST_REPO": {
-        "value": "https://github.com/mattermost/platform",
+        "value": "https://github.com/chrisnordqvist/platform",
         "description": "A tarball containing the mattermost source to download + build - NOTE: this CAN NOT be the prebuild and packaged release, only the source"
     },
     "MATTERMOST_BRANCH": {
@@ -76,7 +76,7 @@
     },
     "ENABLE_TEAM_CREATION": {
             "description": "",
-            "value": "false"
+            "value": "true"
     },
     "ENABLE_USER_CREATION": {
             "description": "",
